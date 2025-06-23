@@ -1,0 +1,397 @@
+.admin-overlay {
+  min-height: 100vh;
+  max-width: 700px;
+  margin: 0 auto;
+  background: #fff;
+  display: flex;
+  flex-direction: column;
+  font-family: 'Segoe UI', Arial, sans-serif;
+  border-radius: 20px;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+  min-width: 50vw;
+}
+
+.admin-navbar {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 2rem 2.5rem 1.5rem 2.5rem;
+  background: #fff;
+  border-top-left-radius: 20px;
+  border-top-right-radius: 20px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+}
+
+.admin-logo {
+  font-size: 2.1rem;
+  font-weight: bold;
+  letter-spacing: 1px;
+  color: #222;
+}
+
+.admin-logout-btn, .admin-back-btn {
+  background: none;
+  border: none;
+  color: #222;
+  font-size: 1.1rem;
+  font-weight: 500;
+  cursor: pointer;
+  margin-left: 1.2em;
+  transition: color 0.18s;
+}
+
+.admin-logout-btn:hover, .admin-back-btn:hover {
+  color: #2196f3;
+}
+
+.admin-main {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 2rem 2.5rem;
+  margin-top: 7rem; /* Ajusta según el alto de tu navbar */
+}
+
+.admin-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  margin-bottom: 2rem;
+  width: 100%;
+  max-width: 600px;
+}
+
+.admin-form input,
+.admin-form textarea {
+  padding: 0.8em;
+  border-radius: 8px;
+  border: 1px solid #bbb;
+  font-size: 1.1rem;
+  background: #f7f7f7;
+  color: #222;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.admin-form textarea {
+  min-height: 60px;
+  resize: vertical;
+}
+
+.admin-form button {
+  background: #2196f3;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  padding: 0.9em 0;
+  font-size: 1.1rem;
+  font-weight: 600;
+  cursor: pointer;
+  margin-top: 8px;
+  width: 100%;
+  transition: background 0.2s;
+}
+
+.admin-form button:hover {
+  background: #1769aa;
+}
+
+.admin-form-toggle {
+  background: #2196f3;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  padding: 0.9em 2.5em;
+  font-size: 1.1rem;
+  font-weight: 600;
+  cursor: pointer;
+  margin-bottom: 1.5rem;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.10);
+  transition: background 0.2s;
+}
+
+.admin-form-toggle:hover {
+  background: #1769aa;
+}
+
+.admin-form-container {
+  width: 100%;
+  max-width: 520px;
+  margin-bottom: 2rem;
+  background: #f7f7f7;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+  padding: 2rem 2rem 1.5rem 2rem;
+}
+
+.admin-section-title {
+  font-size: 1.5rem;
+  color: #1769aa;
+  margin: 2rem 0 1rem 0;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-align: left;
+}
+
+.book-list {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 2rem 0;
+  width: 100%;
+  max-width: 520px;
+}
+
+.book-item {
+  background: #fff;
+  border-radius: 10px;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.06);
+  padding: 1.2rem 1.5rem;
+  margin-bottom: 1.2rem;
+  transition: box-shadow 0.18s;
+}
+
+.book-item:hover {
+  box-shadow: 0 4px 16px rgba(33,150,243,0.10);
+}
+
+.book-item h3 {
+  margin: 0 0 0.3em 0;
+  font-size: 1.2rem;
+  color: #2196f3;
+}
+
+.book-item p {
+  margin: 0.2em 0;
+  color: #444;
+}
+
+.history {
+  background: #f7f7f7;
+  border-radius: 10px;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.04);
+  padding: 1rem 1.2rem;
+  width: 100%;
+  max-width: 500px;
+  margin-bottom: 2rem;
+}
+
+.admin-footer {
+  color: #888;
+  text-align: center;
+  padding: 1.2rem 0 0.7rem 0;
+  font-size: 1rem;
+  opacity: 0.85;
+  letter-spacing: 0.02em;
+}
+
+.admin-user-panel {
+  background: #f7f7f7;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+  padding: 2rem 2rem 1.5rem 2rem;
+  margin-bottom: 2rem;
+  width: 100%;
+  max-width: 520px;
+}
+
+.admin-user-form {
+  display: flex;
+  flex-direction: column;
+  gap: 0.7rem;
+  margin-bottom: 1.5rem;
+}
+
+.admin-user-form input,
+.admin-user-form select {
+  padding: 0.7em;
+  border-radius: 7px;
+  border: 1px solid #bbb;
+  font-size: 1rem;
+  background: #fff;
+  color: #222;
+}
+
+.admin-user-btn {
+  background: #2196f3;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  padding: 0.9em 0;
+  font-size: 1.1rem;
+  font-weight: 600;
+  cursor: pointer;
+  margin-top: 8px;
+  width: 100%;
+  transition: background 0.2s;
+}
+
+.admin-user-btn:hover {
+  background: #1769aa;
+}
+
+.admin-user-msg {
+  margin-top: 8px;
+  color: #2196f3;
+  font-weight: 600;
+  text-align: center;
+}
+
+.admin-user-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.admin-user-item {
+  background: #fff;
+  border-radius: 8px;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.06);
+  padding: 1rem 1.2rem;
+  margin-bottom: 1rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1.2rem;
+}
+
+.admin-user-actions button {
+  background: #2196f3;
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  padding: 0.4em 1em;
+  font-size: 1rem;
+  font-weight: 500;
+  margin-left: 0.5em;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.admin-user-actions button.eliminar {
+  background: #e53935;
+}
+
+.admin-user-actions button:hover {
+  background: #1769aa;
+}
+
+.admin-user-actions button.eliminar:hover {
+  background: #b71c1c;
+}
+
+.admin-busqueda-form {
+  display: flex;
+  gap: 0.7rem;
+  margin-bottom: 1.5rem;
+  align-items: center;
+  max-width: 520px;
+}
+
+.admin-busqueda-input {
+  flex: 1;
+  padding: 0.7em;
+  border-radius: 7px;
+  border: 1px solid #bbb;
+  font-size: 1rem;
+  background: #fff;
+  color: #222;
+}
+
+.admin-busqueda-btn {
+  background: #2196f3;
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  padding: 0.3em 0.8em;
+  font-size: 0.95rem;
+  font-weight: 500;
+  margin-left: 0.5em;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.admin-busqueda-btn.limpiar {
+  background: #e53935;
+}
+
+.admin-busqueda-btn:hover {
+  background: #1769aa;
+}
+
+.admin-busqueda-btn.limpiar:hover {
+  background: #b71c1c;
+}
+
+.admin-libro-form {
+  display: flex;
+  flex-direction: column;
+  gap: 0.7rem;
+  margin-bottom: 1.5rem;
+}
+
+.admin-libro-form input,
+.admin-libro-form textarea {
+  padding: 0.7em;
+  border-radius: 7px;
+  border: 1px solid #bbb;
+  font-size: 1rem;
+  background: #fff;
+  color: #222;
+}
+
+.admin-libro-btn {
+  background: #2196f3;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  padding: 0.9em 0;
+  font-size: 1.1rem;
+  font-weight: 600;
+  cursor: pointer;
+  margin-top: 8px;
+  width: 100%;
+  transition: background 0.2s;
+}
+
+.admin-libro-btn:hover {
+  background: #1769aa;
+}
+
+.admin-libro-msg {
+  margin-top: 8px;
+  color: #2196f3;
+  font-weight: 600;
+  text-align: center;
+}
+
+.admin-libro-actions {
+  display: flex;
+  gap: 0.7em;
+  margin-top: 1em;
+}
+
+.admin-libro-actions button {
+  background: #2196f3;
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  padding: 0.4em 1em;
+  font-size: 1rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.admin-libro-actions button.eliminar {
+  background: #e53935;
+}
+
+.admin-libro-actions button:hover {
+  background: #1769aa;
+}
+
+.admin-libro-actions button.eliminar:hover {
+  background: #b71c1c;
+}

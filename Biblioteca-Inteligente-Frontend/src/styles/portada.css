@@ -1,0 +1,163 @@
+/* portada.css */
+body {
+  margin: 0;
+  padding: 0;
+  min-height: 100vh;
+  font-family: 'Segoe UI', Arial, sans-serif;
+  overflow-x: hidden;
+  /* Quita el background de aquí */
+}
+
+.overlay {
+  background: 
+    linear-gradient(rgba(0,0,0,0.22), rgba(0,0,0,0.22)),
+      url('/fondo-biblioteca.png') no-repeat center center/cover;
+  min-height: 100vh;
+  width: 100%;           /* Cambia de 100vw a 100% */
+  position: fixed;
+  top: 0; left: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  z-index: 0;
+}
+
+nav {
+  width: 100%;
+  padding: 2rem 7vw 0 0; /* Prueba con 7vw para más margen derecho */
+  display: flex;
+  justify-content: flex-end;
+}
+
+nav ul {
+  list-style: none;
+  display: flex;
+  gap: 2.5rem;
+  margin: 0;
+  padding: 0;
+}
+
+nav a {
+  color: #fff;
+  text-decoration: none;
+  font-size: 1.2rem;
+  font-weight: 500;
+  letter-spacing: 0.03em;
+  transition: color 0.2s;
+}
+nav a:hover {
+  color: #4eaaff;
+}
+
+main {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin-top: 6.5rem;
+}
+
+main h1 {
+  font-family: 'Inter', sans-serif;
+  font-size: 5.2rem;
+  font-weight: bold;
+  letter-spacing: -0.08em;
+  margin: 0 0 0.5rem 0;
+  text-align: center;
+  background: none;
+  color: #fff;
+  position: relative;
+  transition: filter 0.3s;
+  filter: none;
+  margin-bottom: 0px;
+  display: block;
+  width: auto;
+  left: unset;
+  transform: none;
+  position: relative;
+}
+main h1::after {
+  display: none;
+}
+
+.portada-main {
+  margin-top: 6.5rem;
+}
+
+.portada-main h2 {
+  color: #fff;
+  font-size: 1.3rem;
+  margin-bottom: 2.5rem;
+  font-weight: 400;
+  letter-spacing: 0.2em;
+  text-align: center;
+}
+
+.portada-acceder-btn {
+  background: linear-gradient(90deg, #2196f3 0%, #1769aa 100%);
+  color: #fff;
+  border: none;
+  border-radius: 50px;
+  padding: 0.9em 2.5em;
+  font-size: 1.2rem;
+  font-weight: 600;
+  cursor: pointer;
+  box-shadow: 0 2px 16px 0 #2196f366, 0 1px 4px #1769aa33;
+  transition: background 0.3s, box-shadow 0.3s, transform 0.18s;
+  position: relative;
+  overflow: hidden;
+  z-index: 1;
+  animation: portada-acceder-float 2.5s ease-in-out infinite alternate;
+  font-family: 'Inter', sans-serif;
+}
+.portada-acceder-btn::before {
+  content: '';
+  position: absolute;
+  left: -50%;
+  top: -50%;
+  width: 200%;
+  height: 200%;
+  background: radial-gradient(circle at 60% 40%, #4eaaff55 0%, transparent 70%);
+  opacity: 0.7;
+  z-index: 0;
+  pointer-events: none;
+  animation: portada-acceder-glow 2.2s infinite alternate;
+}
+.portada-acceder-btn:hover {
+  background: linear-gradient(90deg, #1769aa 0%, #2196f3 100%);
+  box-shadow: 0 6px 32px #2196f399, 0 2px 8px #1769aa55;
+  transform: scale(1.06) rotate(-1deg);
+}
+.portada-acceder-btn:active {
+  transform: scale(0.97);
+}
+@keyframes portada-acceder-float {
+  0% { transform: translateY(0) scale(1);}
+  50% { transform: translateY(-6px) scale(1.04);}
+  100% { transform: translateY(0) scale(1);}
+}
+@keyframes portada-acceder-glow {
+  0% { opacity: 0.7; filter: blur(2px);}
+  50% { opacity: 1; filter: blur(6px);}
+  100% { opacity: 0.7; filter: blur(2px);}
+}
+
+footer {
+  color: #ffffff;
+  text-align: center;
+  padding: 1.2rem 0 0.7rem 0;
+  font-size: 1rem;
+  opacity: 0.85;
+  letter-spacing: 0.02em;
+  width: 100vw;
+  left: 0;
+  position: fixed;
+  bottom: 0;
+  background: transparent;
+  z-index: 10;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 48px;
+}
