@@ -1,6 +1,9 @@
 import React, { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
+import { useUser } from '../context/UserContext';
 import Header from '../components/Header';
 import TurnoCard from '../components/Turnos/TurnoCard';
+import Footer from '../components/Footer';
 import '../styles/Turnos/TurnosBiblioteca.css';
 
 // Helper para saber si un turno ya pasó
@@ -11,6 +14,7 @@ function turnoYaPaso(turno) {
 }
 
 export default function TurnosBiblioteca({ logout }) {
+  const { usuario } = useUser();
   const [turnos, setTurnos] = useState([]);
   const [filtroEstado, setFiltroEstado] = useState('');
   const [busqueda, setBusqueda] = useState('');
@@ -18,7 +22,6 @@ export default function TurnosBiblioteca({ logout }) {
 
   useEffect(() => {
     recargarTurnos();
-    // eslint-disable-next-line
   }, []);
 
   const recargarTurnos = () => {
@@ -28,6 +31,13 @@ export default function TurnosBiblioteca({ logout }) {
       .then(data => setTurnos(Array.isArray(data) ? data : []))
       .finally(() => setLoading(false));
   };
+
+  // Elimina esta función, ya que no se usa y causa el warning:
+  // const onLogout = () => {
+  //   localStorage.removeItem('token');
+  //   setUsuario(null);
+  //   navigate('/login');
+  // };
 
   // Filtro y búsqueda
   const turnosFiltrados = turnos.filter(t => {
@@ -40,17 +50,15 @@ export default function TurnosBiblioteca({ logout }) {
     return coincideEstado && coincideBusqueda;
   });
 
+  if (!usuario) return <div>Cargando usuario...</div>;
+  if (loading) return <div className="turnos-biblio-msg">Cargando turnos...</div>;
+
   return (
-    <div className="turnos-biblio-bg">
-      <Header
-        right={
-          <div className="turnos-biblio-header-right">
-            <button className="panel-link" onClick={logout}>Cerrar sesión</button>
-          </div>
-        }
-      />
+    <>
+      <Header onLogout={logout} />
       <div style={{ height: 110 }} />
-      <div className="turnos-biblio-content">
+      <div className="turnos-biblio-bg">
+        {/* Elimino la barra de tabs secundaria para evitar duplicidad visual */}
         <div className="turnos-biblio-filtros">
           <input
             className="turnos-biblio-busqueda"
@@ -71,9 +79,7 @@ export default function TurnosBiblioteca({ logout }) {
           </select>
         </div>
         <div className="turnos-biblio-lista">
-          {loading ? (
-            <div className="turnos-biblio-msg">Cargando turnos...</div>
-          ) : turnosFiltrados.length === 0 ? (
+          {turnosFiltrados.length === 0 ? (
             <div className="turnos-biblio-msg">
               <span role="img" aria-label="info" style={{ fontSize: 32, display: 'block', marginBottom: 8 }}>📅</span>
               No hay turnos para mostrar.
@@ -95,15 +101,35 @@ export default function TurnosBiblioteca({ logout }) {
                   {turnoYaPaso(turno) && (
                     <span style={{ color: '#e53935', marginLeft: 8 }}>(Finalizado)</span>
                   )}
+                  {/* Mostrar invitados si existen */}
+                  {Array.isArray(turno.InvitadosTurnos) && turno.InvitadosTurnos.length > 0 && (
+                    <div style={{ marginTop: 8 }}>
+                      <b>Invitados:</b>
+                      <ul style={{ margin: 0, paddingLeft: 18 }}>
+                        {turno.InvitadosTurnos.map((inv, idx) => (
+                          <li key={inv.Usuario?.id || idx}>
+                            {inv.Usuario?.nombre || inv.Usuario?.email || 'Invitado'}
+                            {inv.estado_invitacion && (
+                              <span style={{ color: '#888', marginLeft: 8, fontSize: '0.95em' }}>
+                                ({inv.estado_invitacion})
+                              </span>
+                            )}
+                            <br />
+                            <span style={{ fontSize: '0.95em', color: '#555' }}>
+                              DNI: {inv.Usuario?.dni || '-'}
+                            </span>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  )}
                 </div>
               </div>
             ))
           )}
         </div>
       </div>
-      <footer className="panel-footer turnos-biblio-footer">
-        © 2025 Biblioteca Inteligente. Todos los derechos reservados.
-      </footer>
-    </div>
+      <Footer />
+    </>
   );
 }
