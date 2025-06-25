@@ -9,8 +9,12 @@
     "concurrently": "^9.1.2"
   },
   "scripts": {
+<<<<<<< HEAD
     "dev": "concurrently \"npm run dev --prefix biblioteca-inteligente-backend\" \"npm run dev --prefix Biblioteca-Inteligente-Frontend\"",
     "install-all": "npm install --prefix biblioteca-inteligente-backend && npm install --prefix Biblioteca-Inteligente-Frontend",
     "build-and-start": "npm run build --prefix Biblioteca-Inteligente-Frontend && concurrently \"npm start --prefix biblioteca-inteligente-backend\" \"npm start --prefix Biblioteca-Inteligente-Frontend\""
+=======
+    "dev": "concurrently \"npm run dev --prefix biblioteca-inteligente-backend\" \"npm run dev --prefix Biblioteca-Inteligente-Frontend\""
+>>>>>>> d7cd67d63f90a1347598ef5d87151aefad5d1108
   }
 }
