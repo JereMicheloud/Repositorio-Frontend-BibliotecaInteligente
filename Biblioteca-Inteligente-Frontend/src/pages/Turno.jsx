@@ -5,6 +5,7 @@ import { useNavigate, Link } from 'react-router-dom';
 import TurnoCard from '../components/Turnos/TurnoCard';
 import Invitaciones from '../components/Turnos/Invitaciones';
 import '../styles/Turnos/TurnoPage.css';
+import { useUser } from '../context/UserContext';
 
 function TabButton({ active, onClick, children, borderRadius }) {
   return (
@@ -100,6 +101,7 @@ function TurnosList({ turnos, usuario, recargarTurnos, esInvitado, esAdmin }) {
 export default function Turno({ usuario }) {
   const [tab, setTab] = useState('ver');
   const navigate = useNavigate();
+  const { setUsuario } = useUser();
 
   // Un solo fetch para todos los turnos
   const { turnosCreados, turnosInvitado, loading, esAdmin } = useTurnosFull(usuario, tab);
@@ -112,6 +114,7 @@ export default function Turno({ usuario }) {
 
   const onLogout = () => {
     localStorage.removeItem('token');
+    setUsuario(null);
     navigate('/login');
   };
 
@@ -137,16 +140,9 @@ export default function Turno({ usuario }) {
           <div style={{ display: 'flex', alignItems: 'center', gap: '2.5rem', marginRight: '80px' }}>
             <Link to="/catalogo" className="panel-link">Catálogo</Link>
             <Link to="/contacto" className="panel-link">Contacto</Link>
-            <button
-              type="button"
-              className="panel-link"
-              style={{ background: 'none', border: 'none', padding: 0, cursor: 'pointer', color: 'inherit', font: 'inherit' }}
-              onClick={onLogout}
-            >
-              Cerrar sesión
-            </button>
           </div>
         }
+        onLogout={onLogout}
       />
       <div style={{ height: 110 }} />
       <div className="turno-content">
