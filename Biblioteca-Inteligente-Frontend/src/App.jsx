@@ -16,7 +16,7 @@ import Turno from './pages/Turno';
 import BookDetail from './pages/BookDetail'; // Asegúrate de que la ruta sea correcta
 import AcercaDe from './pages/AcercaDe';
 import { useUser } from './context/UserContext';
-import { buildApiUrl, apiConfig } from '../config/api';
+import { buildApiUrl, apiConfig } from './config/api';
 
 function App() {
   const { usuario, setUsuario } = useUser();
