@@ -1,5 +1,4 @@
 import { useState, useEffect } from 'react';
-import { useUser } from '../context/UserContext';
 import { buildApiUrl, apiConfig } from '../config/api';
 
 export default function AsistenteIA() {
@@ -7,33 +6,60 @@ export default function AsistenteIA() {
   const [respuesta, setRespuesta] = useState('');
   const [cargando, setCargando] = useState(false);
   const [historial, setHistorial] = useState([]);
-  const { usuario, setUsuario } = useUser();
 
   // Cargar historial al montar
   useEffect(() => {
     const token = localStorage.getItem('token');
     if (!token) return;
+    
+    console.log('=== DEBUG HISTORIAL ===');
+    console.log('asistenteHistorial endpoint:', apiConfig.endpoints.asistenteHistorial);
+    console.log('URL historial:', buildApiUrl(apiConfig.endpoints.asistenteHistorial));
+    
     fetch(buildApiUrl(apiConfig.endpoints.asistenteHistorial), {
       headers: { Authorization: `Bearer ${token}` }
     })
-      .then(res => res.json())
-      .then(data => setHistorial(Array.isArray(data) ? data : []))
-      .catch(() => setHistorial([])); // Si hay error, historial vacío
+      .then(res => {
+        console.log('Historial response status:', res.status);
+        return res.json();
+      })
+      .then(data => {
+        console.log('Historial data:', data);
+        setHistorial(Array.isArray(data) ? data : []);
+      })
+      .catch(err => {
+        console.error('Error loading historial:', err);
+        setHistorial([]); // Si hay error, historial vacío
+      });
   }, []);
 
   const handleAsk = async (e) => {
     e.preventDefault();
     setCargando(true);
     setRespuesta('');
+    
+    console.log('=== DEBUG ASISTENTE IA ===');
+    console.log('apiConfig:', apiConfig);
+    console.log('apiConfig.endpoints:', apiConfig.endpoints);
+    console.log('asistenteAsk endpoint:', apiConfig.endpoints.asistenteAsk);
+    console.log('URL construida:', buildApiUrl(apiConfig.endpoints.asistenteAsk));
+    
     try {
-      const res = await fetch(buildApiUrl(apiConfig.endpoints.asistenteAsk), {
+      const url = buildApiUrl(apiConfig.endpoints.asistenteAsk);
+      console.log('Fazendo request para:', url);
+      
+      const res = await fetch(url, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${localStorage.getItem('token')}` },
         body: JSON.stringify({
           prompt: pregunta // Solo envía la pregunta, no la lista de libros
         })
       });
+      
+      console.log('Response status:', res.status);
       const data = await res.json();
+      console.log('Response data:', data);
+      
       setRespuesta(data.respuesta || data.error || 'Sin respuesta');
       // Recargar historial después de preguntar
       fetch(buildApiUrl(apiConfig.endpoints.asistenteHistorial), {

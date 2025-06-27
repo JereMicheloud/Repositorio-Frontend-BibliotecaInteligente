@@ -1,10 +1,17 @@
 // Configuración de la API
 const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:3000';
 
-// Debug: Log para verificar la URL en desarrollo
+// Debug: Log para verificar la URL en desarrollo Y producción (temporal)
+console.log('=== API CONFIG DEBUG ===');
+console.log('Environment:', import.meta.env.MODE);
+console.log('API_BASE_URL:', API_BASE_URL);
+console.log('VITE_API_URL:', import.meta.env.VITE_API_URL);
+console.log('import.meta.env keys:', Object.keys(import.meta.env));
+
 if (import.meta.env.DEV) {
-  console.log('API_BASE_URL:', API_BASE_URL);
-  console.log('VITE_API_URL:', import.meta.env.VITE_API_URL);
+  console.log('Development mode detected');
+} else {
+  console.log('Production mode detected');
 }
 
 export const apiConfig = {
@@ -49,7 +56,20 @@ export const apiConfig = {
 
 // Helper function para construir URLs completas
 export const buildApiUrl = (endpoint) => {
-  return `${API_BASE_URL}${endpoint}`;
+  console.log('=== buildApiUrl DEBUG ===');
+  console.log('Input endpoint:', endpoint);
+  console.log('Endpoint type:', typeof endpoint);
+  console.log('API_BASE_URL:', API_BASE_URL);
+  
+  if (!endpoint) {
+    console.error('❌ Endpoint is undefined:', endpoint);
+    console.error('Available endpoints:', Object.keys(apiConfig.endpoints));
+    return API_BASE_URL;
+  }
+  
+  const fullUrl = `${API_BASE_URL}${endpoint}`;
+  console.log('✅ Built URL:', fullUrl);
+  return fullUrl;
 };
 
 // Helper function para hacer requests con configuración común
@@ -69,3 +89,13 @@ export const apiRequest = async (endpoint, options = {}) => {
 };
 
 export default apiConfig;
+
+// Debug function to verify all endpoints
+export const debugEndpoints = () => {
+  console.log('=== ENDPOINTS DEBUG ===');
+  console.log('All endpoints:', apiConfig.endpoints);
+  console.log('asistenteAsk:', apiConfig.endpoints.asistenteAsk);
+  console.log('asistenteHistorial:', apiConfig.endpoints.asistenteHistorial);
+  console.log('buildApiUrl(asistenteAsk):', buildApiUrl(apiConfig.endpoints.asistenteAsk));
+  console.log('buildApiUrl(asistenteHistorial):', buildApiUrl(apiConfig.endpoints.asistenteHistorial));
+};

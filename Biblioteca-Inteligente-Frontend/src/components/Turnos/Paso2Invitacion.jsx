@@ -38,7 +38,7 @@ function Paso2Invitacion({ creador = { nombre: '', dni: '', id: '' }, datosTurno
     }
     setBuscando(true);
     try {
-      const res = await fetch(buildApiUrl(apiConfig.endpoints.usuarios.dni(dni)));
+      const res = await fetch(buildApiUrl(apiConfig.endpoints.usuarioByDni(dni)));
       if (!res.ok) {
         setMensaje('No se encontró un usuario con ese DNI.');
         setBuscando(false);

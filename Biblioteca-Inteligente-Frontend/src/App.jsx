@@ -50,7 +50,7 @@ function App() {
     const token = localStorage.getItem('token');
     const userId = localStorage.getItem('userId');
     if (token && userId) {
-      const res = await fetch(buildApiUrl(apiConfig.endpoints.usuarios) + `/${userId}`, {
+      const res = await fetch(buildApiUrl(apiConfig.endpoints.usuarioById(userId)), {
         headers: { Authorization: `Bearer ${token}` }
       });
       const data = await res.json();
@@ -100,7 +100,7 @@ function App() {
     const token = localStorage.getItem('token');
     const userId = localStorage.getItem('userId');
     if (token && userId) {
-      fetch(buildApiUrl(apiConfig.endpoints.usuarios) + `/${userId}`, {
+      fetch(buildApiUrl(apiConfig.endpoints.usuarioById(userId)), {
         headers: { Authorization: `Bearer ${token}` }
       })
         .then(res => {

@@ -13,13 +13,29 @@ export default function LoginAlumno({ onLogin }) {
   const handleSubmit = async e => {
     e.preventDefault();
     setError('');
+    
+    console.log('=== DEBUG LOGIN ===');
+    console.log('apiConfig:', apiConfig);
+    console.log('login endpoint:', apiConfig.endpoints.login);
+    console.log('URL construida:', buildApiUrl(apiConfig.endpoints.login));
+    console.log('Data being sent:', { dni, password });
+    
     try {
-      const res = await fetch(buildApiUrl(apiConfig.endpoints.login), {
+      const url = buildApiUrl(apiConfig.endpoints.login);
+      console.log('Fazendo request para:', url);
+      
+      const res = await fetch(url, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ dni, password })
       });
+      
+      console.log('Login response status:', res.status);
+      console.log('Login response headers:', res.headers);
+      
       const data = await res.json();
+      console.log('Login response data:', data);
+      
       if (res.ok && data.token) {
         localStorage.setItem('token', data.token);
         localStorage.setItem('userId', data.id);
@@ -36,7 +52,8 @@ export default function LoginAlumno({ onLogin }) {
       } else {
         setError(data.error || 'Error de autenticación');
       }
-    } catch {
+    } catch (err) {
+      console.error('Network error:', err);
       setError('Error de red');
     }
   };

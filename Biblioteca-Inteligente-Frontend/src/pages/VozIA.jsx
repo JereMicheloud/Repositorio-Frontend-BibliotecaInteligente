@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from "react";
 import { useNavigate, Link } from 'react-router-dom';
 import Header from '../components/Header';
 import '../styles/VozIA.css';
-import { buildApiUrl, apiConfig } from '../config/api';
+import { buildApiUrl, apiConfig, debugEndpoints } from '../config/api';
 
 export default function VozIA({ logout }) {
   const [pregunta, setPregunta] = useState('');
@@ -22,9 +22,12 @@ export default function VozIA({ logout }) {
   };
 
   useEffect(() => {
+    // Debug endpoints
+    debugEndpoints();
+    
     const token = localStorage.getItem('token');
     if (!token) return;
-    fetch(buildApiUrl(apiConfig.endpoints.historial), {
+    fetch(buildApiUrl(apiConfig.endpoints.asistenteHistorial), {
       headers: { Authorization: `Bearer ${token}` }
     })
       .then(res => res.json())
@@ -48,13 +51,13 @@ export default function VozIA({ logout }) {
 
     try {
       const token = localStorage.getItem('token');
-      await fetch(buildApiUrl(apiConfig.endpoints.ask), {
+      await fetch(buildApiUrl(apiConfig.endpoints.asistenteAsk), {
         method: 'POST',
         headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${token}` },
         body: JSON.stringify({ prompt: pregunta })
       });
       // 2. Sincroniza el historial real cuando el backend responde
-      fetch(buildApiUrl(apiConfig.endpoints.historial), {
+      fetch(buildApiUrl(apiConfig.endpoints.asistenteHistorial), {
         headers: { Authorization: `Bearer ${token}` }
       })
         .then(res => res.json())
