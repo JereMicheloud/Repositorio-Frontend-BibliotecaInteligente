@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import IntegrantesList from './IntegrantesList';
 import '../../styles/Turnos/Paso2Invitacion.css';
-import { buildApiUrl, apiConfig } from '../config/api';
+import { buildApiUrl, apiConfig } from '../../config/api';
 
 function Paso2Invitacion({ creador = { nombre: '', dni: '', id: '' }, datosTurno, onSolicitarExito }) {
   const [dni, setDni] = useState('');

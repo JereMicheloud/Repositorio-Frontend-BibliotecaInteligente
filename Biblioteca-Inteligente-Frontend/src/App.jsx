@@ -58,7 +58,7 @@ function App() {
           method: 'POST',
           headers: { Authorization: `Bearer ${token}` }
         });
-      } catch (e) {
+      } catch {
         // Puedes mostrar un mensaje de error si quieres
       }
     }

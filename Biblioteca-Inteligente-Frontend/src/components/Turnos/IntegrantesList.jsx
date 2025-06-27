@@ -1,5 +1,4 @@
 import React from 'react';
-import { buildApiUrl, apiConfig } from '../config/api';
 
 export default function IntegrantesList({ integrantes }) {
   return (
@@ -14,7 +13,7 @@ export default function IntegrantesList({ integrantes }) {
         Integrantes
       </div>
       <div style={{ display: 'flex', flexDirection: 'column', gap: 18 }}>
-        {integrantes.map((user, idx) => (
+        {integrantes.map((user) => (
           <div
             key={user.dni || user.nombre}
             style={{

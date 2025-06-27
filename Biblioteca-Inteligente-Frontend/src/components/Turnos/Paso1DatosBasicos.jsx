@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import Paso2Invitacion from './Paso2Invitacion';
 import '../../styles/Turnos/Paso1DatosBasicos.css';
-import { buildApiUrl, apiConfig } from '../config/api';
+import { buildApiUrl, apiConfig } from '../../config/api';
 
 export default function TurnoFormVista ({ usuario, onSolicitarExito }) {
   const [form, setForm] = useState({

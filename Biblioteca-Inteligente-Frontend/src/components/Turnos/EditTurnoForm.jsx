@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { buildApiUrl, apiConfig } from '../config/api';
+import { buildApiUrl, apiConfig } from '../../config/api';
 
 export default function EditTurnoForm({ turno, onCancel, onSave, esAdmin, puedeEditarArea }) {
   const [form, setForm] = useState({

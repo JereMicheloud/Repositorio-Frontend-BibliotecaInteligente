@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { buildApiUrl, apiConfig } from '../config/api';
+import { buildApiUrl, apiConfig } from '../../config/api';
 
 export default function Invitaciones({ usuario }) {
   const [invitaciones, setInvitaciones] = useState([]);
