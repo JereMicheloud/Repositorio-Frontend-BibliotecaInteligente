@@ -83,11 +83,11 @@ export default function Header({ right, hideVozIA, onLogout }) {
         {/* Tabs de administración solo para admin */}
         {usuario && usuario.rol === 'admin' && <AdminTabs />}
         {/* Botón de cerrar sesión */}
-        {usuario && (
+        {usuario && onLogout && (
           <button
             type="button"
             className="panel-link-cs"
-            onClick={handleLogout}
+            onClick={onLogout}
           >
             Cerrar sesión
           </button>

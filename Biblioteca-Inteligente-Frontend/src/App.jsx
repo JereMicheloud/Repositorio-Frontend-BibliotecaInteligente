@@ -24,9 +24,17 @@ function App() {
 
   useEffect(() => {
     fetch(buildApiUrl(apiConfig.endpoints.libros))
-      .then(res => res.json())
+      .then(res => {
+        if (!res.ok) {
+          throw new Error(`Error ${res.status}: ${res.statusText}`);
+        }
+        return res.json();
+      })
       .then(data => setLibros(data))
-      .catch(err => console.error(err));
+      .catch(err => {
+        console.error('Error cargando libros:', err);
+        console.log('URL intentada:', buildApiUrl(apiConfig.endpoints.libros));
+      });
   }, [])
 
   // Componente para proteger rutas que requieren autenticación
@@ -58,8 +66,8 @@ function App() {
           method: 'POST',
           headers: { Authorization: `Bearer ${token}` }
         });
-      } catch {
-        // Puedes mostrar un mensaje de error si quieres
+      } catch (error) {
+        console.error('Error al cerrar sesión:', error);
       }
     }
 
@@ -78,8 +86,15 @@ function App() {
       localStorage.setItem('busquedasCatalogo', JSON.stringify(ultimas3));
     }
 
+    // Actualiza el estado del usuario
+    setUsuario(null);
+    
+    // Redirige al login
     window.location.href = '/login';
   }
+
+  // Alias para handleLogout que algunos componentes esperan
+  const handleLogout = logout;
 
   useEffect(() => {
     const token = localStorage.getItem('token');
@@ -88,11 +103,25 @@ function App() {
       fetch(buildApiUrl(apiConfig.endpoints.usuarios) + `/${userId}`, {
         headers: { Authorization: `Bearer ${token}` }
       })
-        .then(res => res.json())
-        .then(data => setUsuario(data))
-        .catch(() => setUsuario(null));
+        .then(res => {
+          if (!res.ok) {
+            throw new Error('Token inválido o expirado');
+          }
+          return res.json();
+        })
+        .then(data => {
+          setUsuario(data);
+        })
+        .catch(error => {
+          console.error('Error al cargar usuario:', error);
+          // Limpiar datos de sesión inválidos
+          localStorage.removeItem('token');
+          localStorage.removeItem('userId');
+          localStorage.removeItem('usuario');
+          setUsuario(null);
+        });
     }
-  }, []);
+  }, [setUsuario]);
 
   return (
     <BrowserRouter>
@@ -111,7 +140,7 @@ function App() {
           path="/turnos"
           element={
             <RequireAuth usuario={usuario}>
-              <Turno usuario={usuario} logout={logout} />
+              <Turno usuario={usuario} logout={logout} handleLogout={handleLogout} />
             </RequireAuth>
           }
         />
@@ -119,7 +148,7 @@ function App() {
           path="/panel"
           element={
             <RequireAuth usuario={usuario}>
-              <PanelUsuario usuario={usuario} logout={logout} />
+              <PanelUsuario usuario={usuario} logout={logout} handleLogout={handleLogout} />
             </RequireAuth>
           }
         />
@@ -127,7 +156,7 @@ function App() {
           path="/admin"
           element={
             <RequireAuth usuario={usuario} adminOnly={true}>
-              <AdminPanel usuario={usuario} logout={logout} />
+              <AdminPanel usuario={usuario} logout={logout} handleLogout={handleLogout} />
             </RequireAuth>
           }
         />
@@ -135,13 +164,13 @@ function App() {
           path="/admin-turnos"
           element={
             <RequireAuth usuario={usuario} adminOnly={true}>
-              <AdminPanelTurno usuario={usuario} logout={logout} />
+              <AdminPanelTurno usuario={usuario} logout={logout} handleLogout={handleLogout} />
             </RequireAuth>
           }
         />
         <Route
           path="/voz-ia"
-          element={<VozIA usuario={usuario} />}
+          element={<VozIA usuario={usuario} logout={logout} />}
         />
         {/* Página de libros pública (opcional, puedes quitarla si no la usas) */}
         <Route path="/libros" element={

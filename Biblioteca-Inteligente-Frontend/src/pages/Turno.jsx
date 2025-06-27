@@ -99,7 +99,7 @@ function TurnosList({ turnos, usuario, recargarTurnos, esInvitado, esAdmin }) {
   ));
 }
 
-export default function Turno({ usuario }) {
+export default function Turno({ usuario, logout }) {
   const [tab, setTab] = useState('ver');
   const navigate = useNavigate();
   const { setUsuario } = useUser();
@@ -114,9 +114,14 @@ export default function Turno({ usuario }) {
   }, [usuario, navigate]);
 
   const onLogout = () => {
-    localStorage.removeItem('token');
-    setUsuario(null);
-    navigate('/login');
+    if (logout) {
+      logout();
+    } else {
+      // Fallback si no se pasa la función logout
+      localStorage.removeItem('token');
+      setUsuario(null);
+      navigate('/login');
+    }
   };
 
   const noTurnos =

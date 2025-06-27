@@ -4,7 +4,7 @@ import Header from '../components/Header';
 import '../styles/VozIA.css';
 import { buildApiUrl, apiConfig } from '../config/api';
 
-export default function VozIA() {
+export default function VozIA({ logout }) {
   const [pregunta, setPregunta] = useState('');
   const [cargando, setCargando] = useState(false);
   const [historial, setHistorial] = useState([]);
@@ -12,8 +12,13 @@ export default function VozIA() {
   const navigate = useNavigate();
 
   const onLogout = () => {
-    localStorage.removeItem('token');
-    navigate('/login');
+    if (logout) {
+      logout();
+    } else {
+      // Fallback
+      localStorage.removeItem('token');
+      navigate('/login');
+    }
   };
 
   useEffect(() => {

@@ -1,6 +1,12 @@
 // Configuración de la API
 const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:3000';
 
+// Debug: Log para verificar la URL en desarrollo
+if (import.meta.env.DEV) {
+  console.log('API_BASE_URL:', API_BASE_URL);
+  console.log('VITE_API_URL:', import.meta.env.VITE_API_URL);
+}
+
 export const apiConfig = {
   baseURL: API_BASE_URL,
   endpoints: {
