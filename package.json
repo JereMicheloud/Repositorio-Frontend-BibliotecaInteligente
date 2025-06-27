@@ -22,6 +22,9 @@
   },
   "scripts": {
     "dev": "concurrently \"npm run dev --prefix biblioteca-inteligente-backend\" \"npm run dev --prefix Biblioteca-Inteligente-Frontend\"",
+    "build": "npm run build --prefix Biblioteca-Inteligente-Frontend",
+    "start": "npm run preview --prefix Biblioteca-Inteligente-Frontend",
+    "install": "npm install --prefix Biblioteca-Inteligente-Frontend",
     "install-all": "npm install --prefix biblioteca-inteligente-backend && npm install --prefix Biblioteca-Inteligente-Frontend",
     "build-and-start": "npm run build --prefix Biblioteca-Inteligente-Frontend && concurrently \"npm start --prefix biblioteca-inteligente-backend\" \"npm start --prefix Biblioteca-Inteligente-Frontend\""
   }

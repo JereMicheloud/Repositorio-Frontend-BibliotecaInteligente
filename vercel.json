@@ -1,0 +1,13 @@
+{
+  "framework": "vite",
+  "buildCommand": "cd Biblioteca-Inteligente-Frontend && npm install && npm run build",
+  "outputDirectory": "Biblioteca-Inteligente-Frontend/dist",
+  "installCommand": "cd Biblioteca-Inteligente-Frontend && npm install",
+  "devCommand": "cd Biblioteca-Inteligente-Frontend && npm run dev",
+  "rewrites": [
+    {
+      "source": "/(.*)",
+      "destination": "/index.html"
+    }
+  ]
+}
