@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
+import { buildApiUrl } from '../config/api';
 import '../styles/AdminPanel.css';
 import AsistenteIA from '../components/AsistenteIA';
 import LibroForm from '../components/LibroForm';
@@ -62,7 +63,7 @@ const AdminPanel = ({ usuario, logout }) => {
 
   // Recarga libros después de agregar uno nuevo
   const recargarLibros = () => {
-    fetch('http://localhost:3000/api/libros')
+    fetch(buildApiUrl('/api/libros'))
       .then(res => res.json())
       .then(data => setLibros(data))
       .catch(err => console.error(err));
@@ -70,7 +71,7 @@ const AdminPanel = ({ usuario, logout }) => {
 
   // Cargar usuarios
   const recargarUsuarios = () => {
-    fetch('http://localhost:3000/api/usuarios')
+    fetch(buildApiUrl('/api/usuarios'))
       .then(res => res.json())
       .then(data => setUsuarios(data))
       .catch(err => console.error(err));
@@ -80,7 +81,7 @@ const AdminPanel = ({ usuario, logout }) => {
     const token = localStorage.getItem('token');
     const userId = localStorage.getItem('userId');
     if (token && userId) {
-      fetch(`http://localhost:3000/api/busquedas?usuarioId=${userId}`, {
+      fetch(buildApiUrl(`/api/busquedas?usuarioId=${userId}`), {
         headers: { Authorization: `Bearer ${token}` }
       })
         .then(res => res.json())
@@ -103,7 +104,7 @@ const AdminPanel = ({ usuario, logout }) => {
     const token = localStorage.getItem('token');
     const userId = localStorage.getItem('userId');
     if (token && userId) {
-      fetch(`http://localhost:3000/api/busquedas?usuarioId=${userId}`, {
+      fetch(buildApiUrl(`/api/busquedas?usuarioId=${userId}`), {
         headers: { Authorization: `Bearer ${token}` }
       })
         .then(res => res.json())
@@ -121,7 +122,7 @@ const AdminPanel = ({ usuario, logout }) => {
     e.preventDefault();
     if (editandoUsuario) {
       // Editar usuario existente
-      const res = await fetch(`http://localhost:3000/api/usuarios/${editandoUsuario.id}`, {
+      const res = await fetch(buildApiUrl(`/api/usuarios/${editandoUsuario.id}`), {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(userForm)
@@ -136,7 +137,7 @@ const AdminPanel = ({ usuario, logout }) => {
       }
     } else {
       // Crear usuario nuevo
-      const res = await fetch('http://localhost:3000/api/auth/register', {
+      const res = await fetch(buildApiUrl('/api/auth/register'), {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(userForm)
@@ -166,7 +167,7 @@ const AdminPanel = ({ usuario, logout }) => {
 
   const handleEliminarUsuario = async id => {
     if (!window.confirm('¿Seguro que deseas eliminar este usuario?')) return;
-    const res = await fetch(`http://localhost:3000/api/usuarios/${id}`, {
+    const res = await fetch(buildApiUrl(`/api/usuarios/${id}`), {
       method: 'DELETE'
     });
     if (res.ok) {
@@ -186,7 +187,7 @@ const AdminPanel = ({ usuario, logout }) => {
 
     // Buscar en el backend (más eficiente y preciso)
     if (filtro) {
-      const res = await fetch(`http://localhost:3000/api/libros/buscar?termino=${encodeURIComponent(filtro)}`);
+      const res = await fetch(buildApiUrl(`/api/libros/buscar?termino=${encodeURIComponent(filtro)}`));
       if (res.ok) {
         const data = await res.json();
         setLibrosFiltrados(data);
@@ -199,7 +200,7 @@ const AdminPanel = ({ usuario, logout }) => {
 
     // Registra la búsqueda en el backend
     if (token && filtro) {
-      await fetch('http://localhost:3000/api/busquedas', {
+      await fetch(buildApiUrl('/api/busquedas'), {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -234,10 +235,10 @@ const AdminPanel = ({ usuario, logout }) => {
     data.set('anioPublicacion', libroForm.anioPublicacion || '');
     data.set('paginas', libroForm.paginas || '');
 
-    let url = 'http://localhost:3000/api/libros';
+    let url = buildApiUrl('/api/libros');
     let method = 'POST';
     if (editandoLibro) {
-      url = `http://localhost:3000/api/libros/${editandoLibro.id}`;
+      url = buildApiUrl(`/api/libros/${editandoLibro.id}`);
       method = 'PUT';
     }
 
@@ -290,7 +291,7 @@ const AdminPanel = ({ usuario, logout }) => {
   const handleEliminarLibro = async id => {
     if (!window.confirm('¿Seguro que deseas eliminar este libro?')) return;
     const token = localStorage.getItem('token');
-    const res = await fetch(`http://localhost:3000/api/libros/${id}`, {
+    const res = await fetch(buildApiUrl(`/api/libros/${id}`), {
       method: 'DELETE',
       headers: {
         ...(token && { Authorization: `Bearer ${token}` })
@@ -309,7 +310,7 @@ const AdminPanel = ({ usuario, logout }) => {
   const handleEliminarBusqueda = async (id) => {
     const token = localStorage.getItem('token');
     if (!window.confirm('¿Seguro que deseas eliminar esta búsqueda?')) return;
-    await fetch(`http://localhost:3000/api/busquedas/${id}`, {
+    await fetch(buildApiUrl(`/api/busquedas/${id}`), {
       method: 'DELETE',
       headers: { Authorization: `Bearer ${token}` }
     });
@@ -324,7 +325,7 @@ const AdminPanel = ({ usuario, logout }) => {
 
   const handleGuardarEdicionBusqueda = async (id) => {
     const token = localStorage.getItem('token');
-    await fetch(`http://localhost:3000/api/busquedas/${id}`, {
+    await fetch(buildApiUrl(`/api/busquedas/${id}`), {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json',
@@ -526,7 +527,7 @@ const AdminPanel = ({ usuario, logout }) => {
                 <div className="admin-libro-card-img">
                   {libro.portada ? (
                     <img
-                      src={`http://localhost:3000/api/libros/${libro.id}/portada`}
+                      src={buildApiUrl(`/api/libros/${libro.id}/portada`)}
                       alt="Portada"
                     />
                   ) : (

@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import Paso1DatosBasicos from '../components/Turnos/Paso1DatosBasicos';
 import Header from '../components/Header';
+import { buildApiUrl } from '../config/api';
 import { useNavigate, Link } from 'react-router-dom';
 import TurnoCard from '../components/Turnos/TurnoCard';
 import Invitaciones from '../components/Turnos/Invitaciones';
@@ -41,7 +42,7 @@ function useTurnosFull(usuario, tab) {
     setLoading(true);
 
     // Solo un fetch, trae todos los turnos con invitados y salas
-    const todos = await fetch(`http://localhost:3000/api/turnos/full/all`)
+    const todos = await fetch(buildApiUrl('/api/turnos/full/all'))
       .then(res => res.json())
       .then(data => Array.isArray(data) ? data : [])
       .catch(() => []);

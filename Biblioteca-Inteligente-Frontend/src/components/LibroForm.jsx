@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { buildApiUrl } from '../config/api';
 import { useUser } from '../context/UserContext';
 
 export default function LibroForm({ onLibroAgregado }) {
@@ -47,7 +48,7 @@ export default function LibroForm({ onLibroAgregado }) {
     data.set('anioPublicacion', form.anioPublicacion || '');
     data.set('paginas', form.paginas || '');
 
-    const res = await fetch('http://localhost:3000/api/libros', {
+    const res = await fetch(buildApiUrl('/api/libros'), {
       method: 'POST',
       headers: {
         ...(token && { Authorization: `Bearer ${token}` })

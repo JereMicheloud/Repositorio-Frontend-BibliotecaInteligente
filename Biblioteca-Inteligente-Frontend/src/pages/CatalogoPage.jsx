@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import LibroCard from '../components/LibroCard';
 import Header from '../components/Header';
 import Loader from '../components/Loader'; // <-- Importa el Loader
+import { buildApiUrl } from '../config/api';
 import { Link, useNavigate } from 'react-router-dom';
 import '../styles/Catalogo.css';
 
@@ -31,7 +32,7 @@ export default function Catalogo() {
 
   useEffect(() => {
     setLoading(true);
-    fetch('http://localhost:3000/api/libros')
+    fetch(buildApiUrl('/api/libros'))
       .then(res => res.json())
       .then(data => {
         setLibros(data);
@@ -44,7 +45,7 @@ export default function Catalogo() {
     const token = localStorage.getItem('token');
     const userId = localStorage.getItem('userId');
     if (!token || !userId) return;
-    fetch(`http://localhost:3000/api/busquedas?usuarioId=${userId}`, {
+    fetch(buildApiUrl(`/api/busquedas?usuarioId=${userId}`), {
       headers: { Authorization: `Bearer ${token}` }
     })
       .then(res => res.json())
@@ -84,7 +85,7 @@ export default function Catalogo() {
     const token = localStorage.getItem('token');
     const userId = localStorage.getItem('userId');
     if (token && filtroBusqueda && userId) {
-      await fetch('http://localhost:3000/api/busquedas', {
+      await fetch(buildApiUrl('/api/busquedas'), {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

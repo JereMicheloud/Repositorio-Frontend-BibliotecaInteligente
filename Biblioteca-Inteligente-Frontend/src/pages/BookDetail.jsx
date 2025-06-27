@@ -1,6 +1,7 @@
 // BookDetail.jsx
 import { useEffect, useState } from 'react';
 import { useParams, useNavigate, Link } from 'react-router-dom';
+import { buildApiUrl } from '../config/api';
 import Header from '../components/Header';
 import Loader from '../components/Loader';
 import '../styles/BookDetail.css';
@@ -13,7 +14,7 @@ export default function BookDetail() {
 
   useEffect(() => {
     setLoading(true);
-    fetch(`http://localhost:3000/api/libros/${id}`)
+    fetch(buildApiUrl(`/api/libros/${id}`))
       .then(res => res.json())
       .then(data => {
         setLibro(data);
@@ -62,7 +63,7 @@ export default function BookDetail() {
           <div className="bookdetail-img-wrap">
             {libro.portada ? (
               <img
-                src={`http://localhost:3000/api/libros/${libro.id}/portada`}
+                src={buildApiUrl(`/api/libros/${libro.id}/portada`)}
                 alt="Portada"
                 className="bookdetail-img"
               />

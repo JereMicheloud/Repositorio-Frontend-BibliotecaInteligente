@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
+import { buildApiUrl } from '../config/api';
 import { useUser } from '../context/UserContext';
 import Header from '../components/Header';
 import TurnoCard from '../components/Turnos/TurnoCard';
@@ -26,7 +27,7 @@ export default function TurnosBiblioteca({ logout }) {
 
   const recargarTurnos = () => {
     setLoading(true);
-    fetch('http://localhost:3000/api/turnos/full/all')
+    fetch(buildApiUrl('/api/turnos/full/all'))
       .then(res => res.json())
       .then(data => setTurnos(Array.isArray(data) ? data : []))
       .finally(() => setLoading(false));

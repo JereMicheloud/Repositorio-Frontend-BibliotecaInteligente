@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { buildApiUrl } from '../config/api';
 import { useUser } from '../context/UserContext';
 
 export default function AsistenteIA() {
@@ -12,7 +13,7 @@ export default function AsistenteIA() {
   useEffect(() => {
     const token = localStorage.getItem('token');
     if (!token) return;
-    fetch('http://localhost:3000/api/asistente/historial', {
+    fetch(buildApiUrl('/api/asistente/historial'), {
       headers: { Authorization: `Bearer ${token}` }
     })
       .then(res => res.json())
@@ -25,7 +26,7 @@ export default function AsistenteIA() {
     setCargando(true);
     setRespuesta('');
     try {
-      const res = await fetch('http://localhost:3000/api/asistente/ask', {
+      const res = await fetch(buildApiUrl('/api/asistente/ask'), {
         method: 'POST',
         headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${localStorage.getItem('token')}` },
         body: JSON.stringify({
@@ -35,7 +36,7 @@ export default function AsistenteIA() {
       const data = await res.json();
       setRespuesta(data.respuesta || data.error || 'Sin respuesta');
       // Recargar historial después de preguntar
-      fetch('http://localhost:3000/api/asistente/historial', {
+      fetch(buildApiUrl('/api/asistente/historial'), {
         headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
       })
         .then(res => res.json())
