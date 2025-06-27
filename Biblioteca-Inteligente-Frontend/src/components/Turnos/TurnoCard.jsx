@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import EditTurnoForm from './EditTurnoForm';
 import '../../styles/Turnos/TurnoCard.css';
+import { buildApiUrl, apiConfig } from '../config/api';
 
 export default function TurnoCard({ turno, usuario, recargarTurnos, esInvitado, puedeEditar, esAdmin }) {
   const [cancelando, setCancelando] = useState(false);
@@ -92,7 +93,7 @@ export default function TurnoCard({ turno, usuario, recargarTurnos, esInvitado, 
             onClick={async () => {
               if (window.confirm('¿Seguro que deseas cancelar este turno?')) {
                 setCancelando(true);
-                await fetch(`http://localhost:3000/api/turnos/${turno.id}`, {
+                await fetch(buildApiUrl(apiConfig.endpoints.turnos + `/${turno.id}`), {
                   method: 'DELETE'
                 });
                 setCancelando(false);

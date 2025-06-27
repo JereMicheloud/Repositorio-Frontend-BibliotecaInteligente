@@ -1,4 +1,5 @@
 import React from 'react';
+import { buildApiUrl, apiConfig } from '../config/api';
 
 export default function IntegrantesList({ integrantes }) {
   return (

@@ -1,7 +1,7 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useUser } from '../context/UserContext';
-import { buildApiUrl } from '../config/api';
+import { buildApiUrl, apiConfig } from '../config/api';
 import '../styles/LibroCard.css';
 
 export default function LibroCard({ libro }) {
@@ -17,7 +17,7 @@ export default function LibroCard({ libro }) {
       <div className="libro-card-img">
         {libro.portada ? (
           <img
-            src={buildApiUrl(`/api/libros/${libro.id}/portada`)}
+            src={buildApiUrl(`${apiConfig.endpoints.libros}/${libro.id}/portada`)}
             alt="Portada"
           />
         ) : (

@@ -1,6 +1,7 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './AdminPage.css';
 import { useUser } from '../context/UserContext';
+import { buildApiUrl, apiConfig } from '../config/api';
 
 const AdminPage = () => {
   const { usuario, setUsuario } = useUser();
@@ -8,6 +9,21 @@ const AdminPage = () => {
   const [bookTitle, setBookTitle] = useState('');
   const [bookAuthor, setBookAuthor] = useState('');
   const [bookDescription, setBookDescription] = useState('');
+
+  useEffect(() => {
+    // Fetch initial book data from the API
+    const fetchBooks = async () => {
+      try {
+        const response = await fetch(buildApiUrl(apiConfig.endpoints.usuarios));
+        const data = await response.json();
+        setBooks(data);
+      } catch (error) {
+        console.error('Error fetching books:', error);
+      }
+    };
+
+    fetchBooks();
+  }, []);
 
   const handleAddBook = () => {
     if (bookTitle && bookAuthor) {

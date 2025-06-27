@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { buildApiUrl, apiConfig } from '../config/api';
 
 export default function EditTurnoForm({ turno, onCancel, onSave, esAdmin, puedeEditarArea }) {
   const [form, setForm] = useState({
@@ -18,7 +19,7 @@ export default function EditTurnoForm({ turno, onCancel, onSave, esAdmin, puedeE
   // Cargar salas para el select
   useEffect(() => {
     if (puedeEditarArea) {
-      fetch('http://localhost:3000/api/salas')
+      fetch(buildApiUrl(apiConfig.endpoints.salas))
         .then(res => res.json())
         .then(data => setSalas(Array.isArray(data) ? data : []))
         .catch(() => setSalas([]));
@@ -29,7 +30,7 @@ export default function EditTurnoForm({ turno, onCancel, onSave, esAdmin, puedeE
   useEffect(() => {
     if (puedeEditarArea && turno.id) {
       setLoadingSala(true);
-      fetch(`http://localhost:3000/api/turnos/conSala/${turno.id}`)
+      fetch(buildApiUrl(apiConfig.endpoints.turnosConSala) + `/${turno.id}`)
         .then(res => res.json())
         .then(data => {
           setForm(f => ({
@@ -51,7 +52,7 @@ export default function EditTurnoForm({ turno, onCancel, onSave, esAdmin, puedeE
     setSaving(true);
     setError('');
     try {
-      const res = await fetch(`http://localhost:3000/api/turnos/${turno.id}`, {
+      const res = await fetch(buildApiUrl(apiConfig.endpoints.turnos) + `/${turno.id}`, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(form)

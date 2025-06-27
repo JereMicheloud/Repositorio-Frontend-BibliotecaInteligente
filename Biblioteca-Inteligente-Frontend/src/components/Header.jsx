@@ -27,11 +27,6 @@ export default function Header({ right, hideVozIA, onLogout }) {
     setDarkMode((prev) => !prev);
   };
 
-  const handleLogout = () => {
-    setUsuario(null);
-    if (onLogout) onLogout();
-  };
-
   // Mantiene los estilos del Link, pero controla el acceso
   const handleAskAIClick = (e) => {
     e.preventDefault();

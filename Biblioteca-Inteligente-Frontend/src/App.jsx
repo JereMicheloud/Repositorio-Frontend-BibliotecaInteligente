@@ -16,16 +16,17 @@ import Turno from './pages/Turno';
 import BookDetail from './pages/BookDetail'; // Asegúrate de que la ruta sea correcta
 import AcercaDe from './pages/AcercaDe';
 import { useUser } from './context/UserContext';
+import { buildApiUrl, apiConfig } from '../config/api';
 
 function App() {
   const { usuario, setUsuario } = useUser();
   const [libros, setLibros] = useState([])
 
   useEffect(() => {
-    fetch('http://localhost:3000/api/libros')
+    fetch(buildApiUrl(apiConfig.endpoints.libros))
       .then(res => res.json())
       .then(data => setLibros(data))
-      .catch(err => console.error(err))
+      .catch(err => console.error(err));
   }, [])
 
   // Componente para proteger rutas que requieren autenticación
@@ -41,7 +42,7 @@ function App() {
     const token = localStorage.getItem('token');
     const userId = localStorage.getItem('userId');
     if (token && userId) {
-      const res = await fetch(`http://localhost:3000/api/usuarios/${userId}`, {
+      const res = await fetch(buildApiUrl(apiConfig.endpoints.usuarios) + `/${userId}`, {
         headers: { Authorization: `Bearer ${token}` }
       });
       const data = await res.json();
@@ -53,7 +54,7 @@ function App() {
     const token = localStorage.getItem('token');
     if (token) {
       try {
-        await fetch('http://localhost:3000/api/auth/logout', {
+        await fetch(buildApiUrl(apiConfig.endpoints.logout), {
           method: 'POST',
           headers: { Authorization: `Bearer ${token}` }
         });
@@ -84,7 +85,7 @@ function App() {
     const token = localStorage.getItem('token');
     const userId = localStorage.getItem('userId');
     if (token && userId) {
-      fetch(`http://localhost:3000/api/usuarios/${userId}`, {
+      fetch(buildApiUrl(apiConfig.endpoints.usuarios) + `/${userId}`, {
         headers: { Authorization: `Bearer ${token}` }
       })
         .then(res => res.json())
@@ -176,7 +177,7 @@ function App() {
                       <div>
                         <strong>Portada:</strong><br />
                         <img
-                          src={`http://localhost:3000/api/libros/${libro.id}/portada`}
+                          src={buildApiUrl(`${apiConfig.endpoints.libros}/${libro.id}/portada`)}
                           alt="Portada"
                           style={{maxWidth: '150px', maxHeight: '200px', border: '1px solid #888'}}
                         />

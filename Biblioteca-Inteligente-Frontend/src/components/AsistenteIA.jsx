@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
-import { buildApiUrl } from '../config/api';
 import { useUser } from '../context/UserContext';
+import { buildApiUrl, apiConfig } from '../config/api';
 
 export default function AsistenteIA() {
   const [pregunta, setPregunta] = useState('');
@@ -13,7 +13,7 @@ export default function AsistenteIA() {
   useEffect(() => {
     const token = localStorage.getItem('token');
     if (!token) return;
-    fetch(buildApiUrl('/api/asistente/historial'), {
+    fetch(buildApiUrl(apiConfig.endpoints.asistenteHistorial), {
       headers: { Authorization: `Bearer ${token}` }
     })
       .then(res => res.json())
@@ -26,7 +26,7 @@ export default function AsistenteIA() {
     setCargando(true);
     setRespuesta('');
     try {
-      const res = await fetch(buildApiUrl('/api/asistente/ask'), {
+      const res = await fetch(buildApiUrl(apiConfig.endpoints.asistenteAsk), {
         method: 'POST',
         headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${localStorage.getItem('token')}` },
         body: JSON.stringify({
@@ -36,7 +36,7 @@ export default function AsistenteIA() {
       const data = await res.json();
       setRespuesta(data.respuesta || data.error || 'Sin respuesta');
       // Recargar historial después de preguntar
-      fetch(buildApiUrl('/api/asistente/historial'), {
+      fetch(buildApiUrl(apiConfig.endpoints.asistenteHistorial), {
         headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
       })
         .then(res => res.json())

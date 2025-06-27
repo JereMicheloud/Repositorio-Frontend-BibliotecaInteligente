@@ -1,8 +1,8 @@
 import { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
-import { buildApiUrl } from '../config/api';
 import '../styles/LoginAlumno.css';
 import Navbar from '../components/Navbar';
+import { buildApiUrl, apiConfig } from '../config/api';
 
 export default function LoginAlumno({ onLogin }) {
   const navigate = useNavigate();
@@ -14,7 +14,7 @@ export default function LoginAlumno({ onLogin }) {
     e.preventDefault();
     setError('');
     try {
-      const res = await fetch(buildApiUrl('/api/auth/login'), {
+      const res = await fetch(buildApiUrl(apiConfig.endpoints.login), {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ dni, password })

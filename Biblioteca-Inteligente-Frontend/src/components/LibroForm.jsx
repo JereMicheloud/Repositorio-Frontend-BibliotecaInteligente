@@ -1,6 +1,6 @@
 import { useState } from 'react';
-import { buildApiUrl } from '../config/api';
 import { useUser } from '../context/UserContext';
+import { buildApiUrl, apiConfig } from '../config/api';
 
 export default function LibroForm({ onLibroAgregado }) {
   const { usuario, setUsuario } = useUser();
@@ -48,10 +48,10 @@ export default function LibroForm({ onLibroAgregado }) {
     data.set('anioPublicacion', form.anioPublicacion || '');
     data.set('paginas', form.paginas || '');
 
-    const res = await fetch(buildApiUrl('/api/libros'), {
+    const res = await fetch(buildApiUrl(apiConfig.endpoints.libros), {
       method: 'POST',
       headers: {
-        ...(token && { Authorization: `Bearer ${token}` })
+      ...(token && { Authorization: `Bearer ${token}` })
       },
       body: data
     });

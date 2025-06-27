@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import Paso2Invitacion from './Paso2Invitacion';
 import '../../styles/Turnos/Paso1DatosBasicos.css';
+import { buildApiUrl, apiConfig } from '../config/api';
 
 export default function TurnoFormVista ({ usuario, onSolicitarExito }) {
   const [form, setForm] = useState({
@@ -18,7 +19,7 @@ export default function TurnoFormVista ({ usuario, onSolicitarExito }) {
 
   useEffect(() => {
     // Trae las salas desde la API al montar el componente
-    fetch('http://localhost:3000/api/salas')
+    fetch(buildApiUrl(apiConfig.endpoints.salas))
       .then(res => res.json())
       .then(data => setSalas(Array.isArray(data) ? data : []))
       .catch(() => setSalas([]));

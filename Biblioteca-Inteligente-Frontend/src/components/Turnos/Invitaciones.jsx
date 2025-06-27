@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { buildApiUrl, apiConfig } from '../config/api';
 
 export default function Invitaciones({ usuario }) {
   const [invitaciones, setInvitaciones] = useState([]);
@@ -6,7 +7,7 @@ export default function Invitaciones({ usuario }) {
 
   const cargarInvitaciones = React.useCallback(() => {
     setLoading(true);
-    fetch(`http://localhost:3000/api/invitados/usuario/${usuario.id}/pendientes`)
+    fetch(buildApiUrl(apiConfig.endpoints.invitadosPendientes(usuario.id)))
       .then(res => res.json())
       .then(data => setInvitaciones(Array.isArray(data) ? data : []))
       .finally(() => setLoading(false));
@@ -17,11 +18,14 @@ export default function Invitaciones({ usuario }) {
   }, [cargarInvitaciones, usuario]);
 
   const responderInvitacion = async (idInvitado, estado) => {
-    await fetch(`http://localhost:3000/api/invitados/${idInvitado}`, {
+    await fetch(
+      buildApiUrl(apiConfig.endpoints.invitados(idInvitado)),
+      {
       method: 'PUT',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ estado_invitacion: estado })
-    });
+      }
+    );
     cargarInvitaciones();
   };
 

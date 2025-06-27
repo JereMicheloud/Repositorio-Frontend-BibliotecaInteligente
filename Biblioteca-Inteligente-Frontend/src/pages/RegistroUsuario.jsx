@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
-import { buildApiUrl } from '../config/api';
 import '../styles/RegistroUsuario.css';
 import Navbar from '../components/Navbar';
+import { buildApiUrl, apiConfig } from '../config/api';
 
 function Toast({ show, message, type, onClose }) {
   if (!show) return null;
@@ -31,7 +31,7 @@ function RegistroUsuario({ onRegistrado, onAtras }) {
 
   // Al montar, consulta cuántos admins existen
   useEffect(() => {
-    fetch(buildApiUrl('/api/usuarios'))
+    fetch(buildApiUrl(apiConfig.endpoints.usuarios))
       .then(res => res.json())
       .then(users => {
         const adminUsers = users.filter(u => u.rol === 'admin');
@@ -64,7 +64,7 @@ function RegistroUsuario({ onRegistrado, onAtras }) {
       return;
     }
     try {
-      const res = await fetch(buildApiUrl('/api/auth/register'), {
+      const res = await fetch(buildApiUrl(apiConfig.endpoints.authRegister), {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({

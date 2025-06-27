@@ -1,3 +1,41 @@
+# Biblioteca Inteligente - Frontend
+
+## Configuración para Vercel
+
+### Variables de entorno necesarias:
+- `VITE_API_URL`: URL del backend en Render
+
+### Deployment en Vercel:
+1. Conecta tu repositorio de GitHub
+2. Framework Preset: Vite
+3. Build Command: `npm run build`
+4. Output Directory: `dist`
+5. Install Command: `npm install`
+
+### Configuración del Backend:
+Asegúrate de que tu backend en Render tenga configurado CORS para permitir requests desde tu dominio de Vercel.
+
+### Estructura del proyecto:
+- `/src/config/api.js` - Configuración centralizada de la API
+- `/.env` - Variables de entorno para desarrollo
+- `/.env.production` - Variables de entorno para producción
+- `/vercel.json` - Configuración de deployment para Vercel
+
+## Desarrollo local
+
+```bash
+npm install
+npm run dev
+```
+
+## Build para producción
+
+```bash
+npm run build
+```
+
+---
+
 # React + Vite
 
 This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.

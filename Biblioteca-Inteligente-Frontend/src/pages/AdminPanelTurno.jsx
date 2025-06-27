@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { buildApiUrl } from '../config/api';
 import { useUser } from '../context/UserContext';
 import Header from '../components/Header';
 import TurnoCard from '../components/Turnos/TurnoCard';
 import Footer from '../components/Footer';
 import '../styles/Turnos/TurnosBiblioteca.css';
+import { buildApiUrl, apiConfig } from '../config/api';
 
 // Helper para saber si un turno ya pasó
 function turnoYaPaso(turno) {
@@ -20,6 +20,7 @@ export default function TurnosBiblioteca({ logout }) {
   const [filtroEstado, setFiltroEstado] = useState('');
   const [busqueda, setBusqueda] = useState('');
   const [loading, setLoading] = useState(true);
+  const navigate = useNavigate();
 
   useEffect(() => {
     recargarTurnos();
@@ -27,7 +28,7 @@ export default function TurnosBiblioteca({ logout }) {
 
   const recargarTurnos = () => {
     setLoading(true);
-    fetch(buildApiUrl('/api/turnos/full/all'))
+    fetch(buildApiUrl(apiConfig.endpoints.turnosFullAll))
       .then(res => res.json())
       .then(data => setTurnos(Array.isArray(data) ? data : []))
       .finally(() => setLoading(false));

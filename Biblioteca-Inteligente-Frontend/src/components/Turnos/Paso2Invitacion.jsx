@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import IntegrantesList from './IntegrantesList';
 import '../../styles/Turnos/Paso2Invitacion.css';
+import { buildApiUrl, apiConfig } from '../config/api';
 
 function Paso2Invitacion({ creador = { nombre: '', dni: '', id: '' }, datosTurno, onSolicitarExito }) {
   const [dni, setDni] = useState('');
@@ -15,7 +16,7 @@ function Paso2Invitacion({ creador = { nombre: '', dni: '', id: '' }, datosTurno
 
   useEffect(() => {
     // Obtener todas las salas al montar el componente
-    fetch('http://localhost:3000/api/salas')
+    fetch(buildApiUrl(apiConfig.endpoints.salas))
       .then(res => res.json())
       .then(data => setSalas(data))
       .catch(() => setSalas([]));
@@ -37,7 +38,7 @@ function Paso2Invitacion({ creador = { nombre: '', dni: '', id: '' }, datosTurno
     }
     setBuscando(true);
     try {
-      const res = await fetch(`http://localhost:3000/api/usuarios/dni/${dni}`);
+      const res = await fetch(buildApiUrl(apiConfig.endpoints.usuarios.dni(dni)));
       if (!res.ok) {
         setMensaje('No se encontró un usuario con ese DNI.');
         setBuscando(false);
@@ -84,7 +85,7 @@ function Paso2Invitacion({ creador = { nombre: '', dni: '', id: '' }, datosTurno
         setEnviando(false);
         return;
       }
-      const res = await fetch('http://localhost:3000/api/turnos', {
+      const res = await fetch(buildApiUrl(apiConfig.endpoints.turnos), {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(body)
@@ -97,13 +98,13 @@ function Paso2Invitacion({ creador = { nombre: '', dni: '', id: '' }, datosTurno
         // Guardar los integrantes invitados en la base de datos
         for (const invitado of integrantes) {
           if (invitado.id !== creador.id) {
-            await fetch('http://localhost:3000/api/invitados', {
+            await fetch(buildApiUrl(apiConfig.endpoints.invitados), {
               method: 'POST',
               headers: { 'Content-Type': 'application/json' },
               body: JSON.stringify({
-                id_turno: turnoCreado.id,
-                id_usuario: invitado.id,
-                estado_invitacion: 'pendiente'
+              id_turno: turnoCreado.id,
+              id_usuario: invitado.id,
+              estado_invitacion: 'pendiente'
               })
             });
           }

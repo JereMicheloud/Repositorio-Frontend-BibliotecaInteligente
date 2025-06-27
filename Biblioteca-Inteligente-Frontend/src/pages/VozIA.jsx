@@ -1,8 +1,8 @@
 import React, { useState, useEffect, useRef } from "react";
 import { useNavigate, Link } from 'react-router-dom';
-import { buildApiUrl } from '../config/api';
 import Header from '../components/Header';
 import '../styles/VozIA.css';
+import { buildApiUrl, apiConfig } from '../config/api';
 
 export default function VozIA() {
   const [pregunta, setPregunta] = useState('');
@@ -19,7 +19,7 @@ export default function VozIA() {
   useEffect(() => {
     const token = localStorage.getItem('token');
     if (!token) return;
-    fetch(buildApiUrl('/api/asistente/historial'), {
+    fetch(buildApiUrl(apiConfig.endpoints.historial), {
       headers: { Authorization: `Bearer ${token}` }
     })
       .then(res => res.json())
@@ -43,13 +43,13 @@ export default function VozIA() {
 
     try {
       const token = localStorage.getItem('token');
-      await fetch(buildApiUrl('/api/asistente/ask'), {
+      await fetch(buildApiUrl(apiConfig.endpoints.ask), {
         method: 'POST',
         headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${token}` },
         body: JSON.stringify({ prompt: pregunta })
       });
       // 2. Sincroniza el historial real cuando el backend responde
-      fetch(buildApiUrl('/api/asistente/historial'), {
+      fetch(buildApiUrl(apiConfig.endpoints.historial), {
         headers: { Authorization: `Bearer ${token}` }
       })
         .then(res => res.json())

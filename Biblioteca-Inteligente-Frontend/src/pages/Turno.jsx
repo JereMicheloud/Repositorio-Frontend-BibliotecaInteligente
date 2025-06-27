@@ -1,12 +1,12 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import Paso1DatosBasicos from '../components/Turnos/Paso1DatosBasicos';
 import Header from '../components/Header';
-import { buildApiUrl } from '../config/api';
 import { useNavigate, Link } from 'react-router-dom';
 import TurnoCard from '../components/Turnos/TurnoCard';
 import Invitaciones from '../components/Turnos/Invitaciones';
 import '../styles/Turnos/TurnoPage.css';
 import { useUser } from '../context/UserContext';
+import { buildApiUrl, apiConfig } from '../config/api';
 
 function TabButton({ active, onClick, children, borderRadius }) {
   return (
@@ -42,7 +42,7 @@ function useTurnosFull(usuario, tab) {
     setLoading(true);
 
     // Solo un fetch, trae todos los turnos con invitados y salas
-    const todos = await fetch(buildApiUrl('/api/turnos/full/all'))
+    const todos = await fetch(buildApiUrl(apiConfig.endpoints.turnosFullAll))
       .then(res => res.json())
       .then(data => Array.isArray(data) ? data : [])
       .catch(() => []);
