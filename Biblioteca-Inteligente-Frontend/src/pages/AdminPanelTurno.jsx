@@ -20,7 +20,6 @@ export default function TurnosBiblioteca({ logout }) {
   const [filtroEstado, setFiltroEstado] = useState('');
   const [busqueda, setBusqueda] = useState('');
   const [loading, setLoading] = useState(true);
-  const navigate = useNavigate();
 
   useEffect(() => {
     recargarTurnos();
