@@ -1,9 +1,31 @@
 import '../styles/portada.css';
 import Navbar from '../components/Navbar';
 import { useNavigate } from 'react-router-dom';
+import { useState } from 'react';
+import { buildApiUrl } from '../config/api';
 
 export default function Portada() {
   const navigate = useNavigate();
+  const [precalentando, setPrecalentando] = useState(false);
+
+  const handleAccederBiblioteca = async () => {
+    if (precalentando) return; // Evitar múltiples clicks
+    
+    setPrecalentando(true);
+    try {
+      // Precalentar el servidor de Render con una petición al endpoint /test
+      console.log('Precalentando servidor...');
+      const response = await fetch(buildApiUrl('/test'));
+      if (response.ok) {
+        console.log('Servidor precalentado exitosamente');
+      }
+    } catch (error) {
+      console.log('Error al precalentar servidor:', error);
+    } finally {
+      // Navegar al login independientemente del resultado
+      navigate('/login');
+    }
+  };
 
   return (
     <div className="overlay">
@@ -81,8 +103,16 @@ export default function Portada() {
           justifyContent: "center",
           marginTop: "2.5rem"
         }}>
-          <button className="portada-acceder-btn" onClick={() => navigate('/login')}>
-            Acceder a la biblioteca
+          <button 
+            className="portada-acceder-btn" 
+            onClick={handleAccederBiblioteca}
+            disabled={precalentando}
+            style={{
+              opacity: precalentando ? 0.7 : 1,
+              cursor: precalentando ? 'not-allowed' : 'pointer'
+            }}
+          >
+            {precalentando ? 'Bienvenido' : 'Acceder a la biblioteca'}
           </button>
         </div>
       </main>

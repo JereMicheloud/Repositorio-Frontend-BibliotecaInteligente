@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useNavigate, Link } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import '../styles/AdminPanel.css';
 import AsistenteIA from '../components/AsistenteIA';
 import LibroForm from '../components/LibroForm';
@@ -59,7 +59,6 @@ const AdminPanel = ({ usuario, logout }) => {
   const [nuevoTerminoBusqueda, setNuevoTerminoBusqueda] = useState('');
   const [pagina, setPagina] = useState(1);
   useUser();
-  useNavigate();
 
   // Recarga libros después de agregar uno nuevo
   const recargarLibros = () => {
@@ -345,11 +344,6 @@ const AdminPanel = ({ usuario, logout }) => {
   useEffect(() => {
     setPagina(1); // Reinicia a la página 1 cuando cambia la búsqueda o los libros
   }, [librosFiltrados]);
-
-  const onLogout = () => {
-    localStorage.removeItem('token');
-    navigate('/login');
-  };
 
   return (
     <>

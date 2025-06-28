@@ -1,12 +1,12 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useUser } from '../context/UserContext';
+
 import { buildApiUrl, apiConfig } from '../config/api';
 import '../styles/LibroCard.css';
 
 export default function LibroCard({ libro }) {
   const navigate = useNavigate();
-  const { usuario, setUsuario } = useUser();
+  
 
   return (
     <div
