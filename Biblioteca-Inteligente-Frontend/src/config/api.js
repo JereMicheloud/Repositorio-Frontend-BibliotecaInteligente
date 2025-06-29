@@ -20,6 +20,7 @@ export const apiConfig = {
     // Auth
     login: '/api/auth/login',
     register: '/api/auth/register',
+    authRegister: '/api/auth/register',
     logout: '/api/auth/logout',
     
     // Usuarios
@@ -44,8 +45,11 @@ export const apiConfig = {
     // Turnos
     turnos: '/api/turnos',
     turnosFull: '/api/turnos/full/all',
+    turnosFullAll: '/api/turnos/full/all',
+    turnosConSala: '/api/turnos/con-sala',
     
     // Invitaciones
+    invitados: '/api/invitados',
     invitadosPendientes: (userId) => `/api/invitados/usuario/${userId}/pendientes`,
     invitadoById: (id) => `/api/invitados/${id}`,
     
