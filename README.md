@@ -4,9 +4,13 @@ Una aplicación web moderna y completa para la gestión inteligente de bibliotec
 
 ## 🌐 Enlaces del Proyecto
 
-- **🚀 Aplicación en Vivo:** [BiblioTech Frontend en Vercel](https://enlace-a-vercel.app)
-- **🔗 Backend API:** [BiblioTech Backend en Render](https://repositorio-backend-bibliotecainteligente.onrender.com)
-- **📁 Código Fuente Backend:** [Repositorio Backend](https://enlace-al-repositorio-backend.git)
+### 🌐 Aplicaciones en Vivo
+- **🖥️ Frontend (Vercel):** https://repositoriofrontendbibliotech.vercel.app/
+- **⚡ Backend API (Render):** https://repositorio-backend-bibliotecainteligente.onrender.com
+
+### 📂 Repositorios de Código
+- **🎨 Frontend Repository:**  https://github.com/JereMicheloud/Repositorio-Frontend-BibliotecaInteligente.git
+- **⚙️ Backend Repository:** https://github.com/FelipeDiazAimar/Repositorio-Backend-BibliotecaInteligente.git
 
 ## ✨ Características Principales
 
