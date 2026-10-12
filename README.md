@@ -1,11 +1,15 @@
 # 📚 BiblioTech - Biblioteca Inteligente Frontend
 
+**SPA del sistema BiblioTech: catálogo, asistente IA con voz, turnos y paneles. ([🇬🇧 English version](README.en.md))**
+
+**[🚀 Demo en vivo](https://bibliotechjf.vercel.app) · [⚡ Backend API](https://repositorio-backend-bibliotecainteligente.onrender.com/api/health) · [📦 Repo](https://github.com/FelipeDiazAimar/repositoriofrontendbibliotech) · [📚 Monorepo](https://github.com/FelipeDiazAimar/BibliotecaInteligente)**
+
 Una aplicación web moderna y completa para la gestión inteligente de bibliotecas, desarrollada con React y Vite. BiblioTech ofrece una experiencia de usuario fluida y funcionalidades avanzadas como asistente de IA por voz, sistema de turnos y gestión completa de catálogo.
 
 ## 🌐 Enlaces del Proyecto
 
 ### 🌐 Aplicaciones en Vivo
-- **🖥️ Frontend (Vercel):** https://repositoriofrontendbibliotech.vercel.app/
+- **🖥️ Frontend (Vercel):** https://bibliotechjf.vercel.app
 - **⚡ Backend API (Render):** https://repositorio-backend-bibliotecainteligente.onrender.com
 
 ### 📂 Repositorios de Código
@@ -298,3 +302,15 @@ DATABASE_URL=postgresql://[credenciales]@aws-0-sa-east-1.pooler.supabase.com:543
 - Comprobar configuración de Vercel
 - Verificar paths en vercel.json
 - Revisar logs de build
+
+## 👤 Autor, contacto y licencia
+
+**Felipe Diaz Aimar** — Desarrollo full-stack (React, Vite, MUI).
+- 💼 LinkedIn: https://www.linkedin.com/in/felipe-aimar/
+- 📧 Email: felipediazaimar@gmail.com
+- 🐙 GitHub: https://github.com/FelipeDiazAimar
+- 🌐 Demo: https://bibliotechjf.vercel.app
+
+Colaboración: [@JereMicheloud](https://github.com/JereMicheloud). MIT.
+
+> **English TL;DR:** BiblioTech Frontend is a React 19 + Vite + MUI + Router 7 SPA: smart catalog, voice AI assistant, room bookings with invites, user/admin panels, dark/light mode. Demo mode (`VITE_DEMO_MODE=true`) runs with zero backend (`demo@biblioteca.local` / `demo1234`, `fetchConFallback`); real mode with `VITE_API_URL`. Run inside `Biblioteca-Inteligente-Frontend/`: `npm install && npm run dev` (`:5173`). Full English docs in [README.en.md](README.en.md).
